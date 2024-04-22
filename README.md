@@ -3,7 +3,7 @@
 ---
 
 ## [Poster Presentation](Figures/Poster.pdf)
-##[Interactive Dashboard](https://reidmilo.shinyapps.io/Dashboard/)
+## [Interactive Dashboard](https://reidmilo.shinyapps.io/Dashboard/)
 
 ## Introduction
 In the dynamic realm of sports analytics, accurate predictions remains paramount. Leveraging cutting-edge machine learning techniques, particularly Support Vector Machines (SVMs), offers a promising route to decode the intricate patterns underlying game outcomes. This project embarks on a journey into the 2023 Women's NCAA DI-DIII Lacrosse season, delving deep into how SVMs, renowned for their geometric prowess, illuminate the trajectory of matches with remarkable precision.
