@@ -4,6 +4,7 @@ setwd('/Users/oliverreidmiller/Desktop/Applied Econ Data/Project/Lax Pro Data/Wo
 library(caret)
 library(kernlab)
 library(ROCR)
+library(ggplot2)
 
 df <- read.csv('finalWLAXdf.csv')
 
@@ -28,22 +29,16 @@ test <- df[!sample, ]
 
 library(ROCR)
 
-# Train the SVM model using the training data
 svm_model <- svm(Win ~ ., data = train, cost = 4, kernel = 'linear')
 
-# Predict probabilities on the test set
 svm_probs <- predict(svm_model, newdata = test)
 
-# Create a prediction object
 svm_pred <- prediction(svm_probs[,2], test$Win,probability = TRUE)
 
-# Create a performance object
 svm_perf <- performance(svm_pred, "tpr", "fpr")
 
 # Plot the ROC curve
 plot(svm_perf, main = "ROC Curve for SVM Model", col = "blue")
-
-
 
 
 svm_model <- svm(Win ~ ., data = train, cost = 4, kernel = 'linear')
@@ -52,7 +47,7 @@ accuracy=0
 
 library(ggplot2)
 
-# Initialize an empty data frame to store iteration and accuracy
+# Initialize an empty data frame for iteration and accuracy
 plot_data <- data.frame(iteration = 1:20, accuracy = numeric(20))
 
 # Loop through 20 iterations
@@ -85,17 +80,6 @@ print(mean(plot_data$accuracy))
 svm_model <- svm(Win ~ ., data = df, cost = 4, kernel = 'linear')
 
 
-perf_val <- performance(predicted_classes,"auc")
-perf_val
-
-# Calculating True Positive and False Positive Rate
-perf_val <- performance(pred_val, "tpr", "fpr")
-
-# Plot the ROC curve
-plot(perf_val, col = "green", lwd = 1.5)
-
-
-
 # Assuming your target variable is in the last column
 target <- df[, ncol(df)]
 features <- df[, -ncol(df)]
@@ -118,10 +102,6 @@ sorted_feature_names <- feature_names[order(importance, decreasing = TRUE)]  # S
 reformatted_feature_names <- gsub("_", " ", sorted_feature_names)  # Replace underscores with spaces
 reformatted_feature_names <- gsub("(\\b[a-z])", "\\U\\1", reformatted_feature_names, perl = TRUE)  # Capitalize first letter of each word
 reformatted_feature_names <- gsub("(\\b[A-Z])", " \\1", reformatted_feature_names)  # Add space before capital letters
-
-
-# Load required libraries
-library(ggplot2)
 
 # Create a data frame for plotting
 plot_data <- data.frame(
@@ -149,17 +129,11 @@ ggplot(plot_data, aes(x = importance, y = reorder(feature, -importance))) +
 bivar_svm_model <- svm(Win ~ record+opp_record, data = df, cost = 4, kernel = 'linear')
 
 
-# Assuming 'df' is your dataframe
 # Fit the SVM model
 svm_model <- svm(Win ~ ., data = train, cost = 4, kernel = 'linear')
 
 summary(svm_model)
 
-# Predictions on the training data (just for example, usually you'd use a separate test set)
-
-
-# Evaluate the accuracy
-print(paste("Accuracy:", accuracy))
 
 # Print the summary of the model
 #tune_out = tune(svm, 
@@ -171,14 +145,13 @@ print(paste("Accuracy:", accuracy))
 #summary(bestmod)
 
 
-# Predictions on the training data (just for example, usually you'd use a separate test set)
 
 
 bivar_svm_model <- svm(Win ~ record+opp_record, data = df, cost = 4, kernel = 'linear')
 
 library(ggplot2)
 
-# Train the SVM
+# Train the SVM --> For all bivariate variabels
 bivar_svm_model <- svm(Win ~ record + opp_record, data = df, cost = 4, kernel = 'linear')
 
 # Generate data for plotting decision boundary
@@ -203,20 +176,6 @@ ggplot(plot_data, aes(x = record, y = opp_record)) +
   theme(
     text = element_text(family = "Times New Roman"),  
     plot.title = element_text(face = "italic", size = 30), 
-  )
-
-
-sample <- sample(c(TRUE, FALSE), nrow(df), replace=TRUE, prob=c(0.8,0.2))
-train <- df[sample, ]
-test <- df[!sample, ]
-
-# Train the SVM model (you need to define `svm_model` before this loop)
-#bivar_svm_model <- svm(Win ~ avgFaceOffPct + opp_avgFaceOffPct, data = train, cost = 4, kernel = 'linear')
-
-# Predictions on the testing data
-predicted_classes <- predict(bivar_svm_model, test)
-
-# Calculate accuracy and store it
-print(mean(predicted_classes == test$Win))
+  
 
 
