@@ -2,6 +2,6 @@
 ### Oliver Reidmiller 
 ---
 
-## [Poster](Figures/Poster.pdf)
+## [Poster Presentation](Figures/Poster.pdf)
 
 ## Introduction
